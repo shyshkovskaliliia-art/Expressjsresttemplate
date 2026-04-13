@@ -28,5 +28,15 @@
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
     "ip": "::1",
     "statusCode": 404
+  },
+  {
+    "timestamp": "2026-04-13T12:07:08.600Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {},
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+    "ip": "::1",
+    "statusCode": 304
   }
 ]
