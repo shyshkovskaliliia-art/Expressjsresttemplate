@@ -22,18 +22,18 @@ app.use(statsMiddleware(appEventEmitter));
 
 app.use('/api/teachers', teachersRouter);
 
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
   console.error('❌ Error:', err.stack);
   res.status(500).json({ success: false, message: 'Internal server error' });
 });
 
 
-app.use('*', (req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
