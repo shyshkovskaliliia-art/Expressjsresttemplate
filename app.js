@@ -33,14 +33,16 @@ app.get('/', (_req, res) => {
   });
 });
 
+app.get('/health', (_req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 
 app.use((err, _req, res, _next) => {
   console.error('❌ Error:', err.stack);
   res.status(500).json({ success: false, message: 'Internal server error' });
 });
 
-
-app.use((_req, res) => {
+app.use('*', (_req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 

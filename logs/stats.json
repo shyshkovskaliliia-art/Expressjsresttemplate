@@ -1310,5 +1310,80 @@
     "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
     "ip": "::1",
     "statusCode": 304
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:28:12.768Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {},
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+    "ip": "::1",
+    "statusCode": 200
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:29:54.075Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {},
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+    "ip": "::1",
+    "statusCode": 304
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:32:48.117Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {},
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+    "ip": "::1",
+    "statusCode": 304
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:34:35.104Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {},
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; uk-UA) WindowsPowerShell/5.1.26100.7920",
+    "ip": "::1",
+    "statusCode": 200
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:35:42.764Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {
+      "password": "***",
+      "token": "***",
+      "email": "***",
+      "name": "John"
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0",
+    "ip": "::1",
+    "statusCode": 304
+  },
+  {
+    "type": "statistics",
+    "timestamp": "2026-04-13T13:36:08.823Z",
+    "method": "GET",
+    "path": "/",
+    "pathVariables": {},
+    "queryString": {
+      "password": "***",
+      "token": "***",
+      "email": "***"
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; uk-UA) WindowsPowerShell/5.1.26100.7920",
+    "ip": "::1",
+    "statusCode": 200
   }
 ]

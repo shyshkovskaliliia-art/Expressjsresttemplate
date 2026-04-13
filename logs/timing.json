@@ -7,5 +7,35 @@
     "path": "/1",
     "responseTime": 0.8915,
     "statusCode": 200
+  },
+  {
+    "type": "timing",
+    "timestamp": "2026-04-13T13:28:12.746Z",
+    "ip": "::1",
+    "method": "GET",
+    "path": "/",
+    "responseTime": 151.8522,
+    "statusCode": 200,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0"
+  },
+  {
+    "type": "timing",
+    "timestamp": "2026-04-13T13:34:35.100Z",
+    "ip": "::1",
+    "method": "GET",
+    "path": "/",
+    "responseTime": 3.4262,
+    "statusCode": 200,
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; uk-UA) WindowsPowerShell/5.1.26100.7920"
+  },
+  {
+    "type": "timing",
+    "timestamp": "2026-04-13T13:36:08.822Z",
+    "ip": "::1",
+    "method": "GET",
+    "path": "/",
+    "responseTime": 3.0052,
+    "statusCode": 200,
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; uk-UA) WindowsPowerShell/5.1.26100.7920"
   }
 ]
