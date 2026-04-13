@@ -22,8 +22,15 @@ app.use(statsMiddleware(appEventEmitter));
 
 app.use('/api/teachers', teachersRouter);
 
-app.get('/health', (_req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+app.get('/', (_req, res) => {
+  res.json({
+    message: 'Express REST API - Teachers Resource',
+    endpoints: {
+      teachers: 'GET/POST /api/teachers',
+      teacherById: 'GET/DELETE /api/teachers/:id',
+      health: 'GET /health'
+    }
+  });
 });
 
 
