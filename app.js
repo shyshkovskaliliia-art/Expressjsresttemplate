@@ -1,28 +1,40 @@
 const express = require('express');
 const cors = require('cors');
-const appEventEmitter = require('./middleware/eventEmitters');
+require('dotenv').config();
+
+const appEventEmitter = require('./middleware/eventEmitter');
+const LogSubscriber = require('./subscribers/logSubscriber');
 const timingMiddleware = require('./middleware/timingMiddleware');
 const statsMiddleware = require('./middleware/statsMiddleware');
-const teachersRouter = require('./routes/teachers');
+
+const teachersRouter = require('./routes/users');
 
 const app = express();
 
-// Ініціалізація subscriber
 new LogSubscriber(appEventEmitter);
 
-// Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(timingMiddleware(appEventEmitter));
 app.use(statsMiddleware(appEventEmitter));
 
-// Routes
 app.use('/api/teachers', teachersRouter);
 
-// Error handler
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ success: false, message: 'Server error' });
+  console.error('❌ Error:', err.stack);
+  res.status(500).json({ success: false, message: 'Internal server error' });
+});
+
+
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 module.exports = app;
