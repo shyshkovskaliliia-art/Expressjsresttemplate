@@ -1,78 +1,35 @@
-const Department = require('../models/department.model');
+const db = require('../config/database');
 
-/**
- * @swagger
- * definitions:
- *   User:
- *     type: object
- *     required:
- *        - id
- *        - firstName
- *        - lastName
- *        - email
- *     properties:
- *       id:
- *         type: number
- *       firstName:
- *         type: string
- *       lastName:
- *         type: string
- *       email:
- *         type: string
- */
-const users = [
-    {
-        id: 1,
-        firstName: 'FirstName1',
-        lastName: 'LastName1',
-        email: 'a1@b.com',
-    },
-    {
-        id: 2,
-        firstName: 'FirstName2',
-        lastName: 'LastName2',
-        email: 'a2@b.com',
-    },
-    {
-        id: 3,
-        firstName: 'FirstName3',
-        lastName: 'LastName3',
-        email: 'a3@b.com',
-    },
-];
-
-/**
- * @swagger
- * /users:
- *   get:
- *     description: Get all users
- *     tags:
- *       - Employee
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: All users
- *         schema:
- *           $ref: '#/definitions/User'
- *       500:
- *         description: Internal server error
- */
-const getUsers = async (req, res) => {
-    // Demo implementation
-    // const departments = await Department.getAll();
-    // console.log(departments);
-    res.status(200).json(users);
+exports.getAllTeachers = async (req, res, next) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM teachers');
+    res.json({ success: true, data: rows });
+  } catch (err) { next(err); }
 };
 
-const addUser = async (req, res) => {
-    const user = req.body;
-    user.id = users.length + 1;
-    users.push(user);
-    res.status(201).json(user);
+exports.getTeacherById = async (req, res, next) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM teachers WHERE teacher_id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ success: false, message: 'Teacher not found' });
+    res.json({ success: true, data: rows[0] });
+  } catch (err) { next(err); }
 };
 
-module.exports = {
-    getUsers,
-    addUser,
+exports.createTeacher = async (req, res, next) => {
+  try {
+    const { full_name, phone, address, birth_date, start_date } = req.body;
+    const [result] = await db.query(
+      'INSERT INTO teachers (full_name, phone, address, birth_date, start_date) VALUES (?, ?, ?, ?, ?)',
+      [full_name, phone, address, birth_date, start_date]
+    );
+    res.status(201).json({ success: true, data: { teacher_id: result.insertId, ...req.body } });
+  } catch (err) { next(err); }
+};
+
+exports.deleteTeacher = async (req, res, next) => {
+  try {
+    const [result] = await db.query('DELETE FROM teachers WHERE teacher_id = ?', [req.params.id]);
+    if (result.affectedRows === 0) return res.status(404).json({ success: false, message: 'Teacher not found' });
+    res.json({ success: true, message: 'Teacher deleted successfully' });
+  } catch (err) { next(err); }
 };

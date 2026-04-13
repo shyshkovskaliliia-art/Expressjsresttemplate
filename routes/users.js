@@ -1,11 +1,10 @@
 const express = require('express');
-const { getUsers, addUser } = require('../controllers/users.controller');
-
 const router = express.Router();
+const controller = require('../controllers/teachersController');
 
-/* GET users listing. */
-router.get('/', getUsers);
-
-router.post('/new', addUser);
+router.get('/', controller.getAllTeachers);
+router.get('/:id', controller.getTeacherById);
+router.post('/', controller.createTeacher);
+router.delete('/:id', controller.deleteTeacher);
 
 module.exports = router;
