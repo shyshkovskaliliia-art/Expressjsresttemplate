@@ -1,48 +1,43 @@
+// subscribers/logSubscriber.js
 const fs = require('fs').promises;
 const path = require('path');
 
 class LogSubscriber {
   constructor(eventEmitter, options = {}) {
     this.eventEmitter = eventEmitter;
-    this.logFilePath = options.logFilePath || path.join(__dirname, '../logs/stats.json');
-    this.outputToConsole = options.console ?? true;
-    this.outputToFile = options.file ?? true;
+    this.logFile = options.logFilePath || './logs/stats.json';
+    this.toConsole = options.console ?? true;
     
+    this.init();
     this.subscribe();
   }
   
+  async init() {
+    await fs.mkdir(path.dirname(this.logFile), { recursive: true }).catch(() => {});
+    try { await fs.access(this.logFile); } 
+    catch { await fs.writeFile(this.logFile, '[]'); }
+  }
+  
   subscribe() {
-    // Handle timing events
     this.eventEmitter.on('requestCompleted', (data) => {
-      if (this.outputToConsole) {
-        console.log(`[Timing] ${data.method} ${data.path} - ${data.responseTime}ms`);
-      }
-      if (this.outputToFile) {
-        this.appendToFile('timing', data);
-      }
+      if (this.toConsole) console.log(`⏱️ ${data.method} ${data.path} - ${data.responseTime}ms`);
+      this.writeLog(data);
     });
     
-    // Handle stats events
     this.eventEmitter.on('statsCollected', (data) => {
-      if (this.outputToConsole) {
-        console.log(`[Stats] ${data.method} ${data.path} from ${data.userAgent}`);
-      }
-      if (this.outputToFile) {
-        this.appendToFile('statistics', data);
-      }
+      if (this.toConsole) console.log(`📊 ${data.method} ${data.path}`);
+      this.writeLog(data);
     });
   }
   
-  async appendToFile(type, data) {
+  async writeLog(entry) {
     try {
-      const logEntry = { type, ...data };
-      const content = await fs.readFile(this.logFilePath, 'utf-8').catch(() => '[]');
+      const content = await fs.readFile(this.logFile, 'utf-8').catch(() => '[]');
       const logs = JSON.parse(content || '[]');
-      logs.push(logEntry);
-      await fs.writeFile(this.logFilePath, JSON.stringify(logs, null, 2));
-    } catch (err) {
-      console.error('Failed to write log:', err);
-    }
+      logs.push(entry);
+      if (logs.length > 1000) logs.shift();
+      await fs.writeFile(this.logFile, JSON.stringify(logs, null, 2));
+    } catch (err) { console.error('Log error:', err); }
   }
 }
 

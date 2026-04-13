@@ -1,9 +1,10 @@
+// controllers/teachersController.js
 const db = require('../config/database');
 
 exports.getAllTeachers = async (req, res, next) => {
   try {
     const [rows] = await db.query('SELECT * FROM teachers');
-    res.json({ success: true, data: rows });
+    res.json({ success: true, count: rows.length, data: rows });
   } catch (err) { next(err); }
 };
 
@@ -18,6 +19,9 @@ exports.getTeacherById = async (req, res, next) => {
 exports.createTeacher = async (req, res, next) => {
   try {
     const { full_name, phone, address, birth_date, start_date } = req.body;
+    if (!full_name || !start_date) {
+      return res.status(400).json({ success: false, message: 'full_name and start_date are required' });
+    }
     const [result] = await db.query(
       'INSERT INTO teachers (full_name, phone, address, birth_date, start_date) VALUES (?, ?, ?, ?, ?)',
       [full_name, phone, address, birth_date, start_date]

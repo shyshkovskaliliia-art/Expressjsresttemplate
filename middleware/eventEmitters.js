@@ -1,3 +1,4 @@
+// middleware/eventEmitter.js
 const EventEmitter = require('events');
 
 class AppEventEmitter extends EventEmitter {

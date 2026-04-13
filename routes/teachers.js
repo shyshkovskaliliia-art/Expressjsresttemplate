@@ -1,10 +1,14 @@
+// routes/teachers.js
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/teachersController');
+const ctrl = require('../controllers/teachersController');
 
-router.get('/', controller.getAllTeachers);
-router.get('/:id', controller.getTeacherById);
-router.post('/', controller.createTeacher);
-router.delete('/:id', controller.deleteTeacher);
+router.route('/')
+  .get(ctrl.getAll)
+  .post(ctrl.create);
+
+router.route('/:id')
+  .get(ctrl.getById)
+  .delete(ctrl.delete);
 
 module.exports = router;

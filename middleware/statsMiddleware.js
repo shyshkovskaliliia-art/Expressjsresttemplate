@@ -1,35 +1,29 @@
-const SENSITIVE_KEYS = ['password', 'token', 'email'];
+// middleware/statsMiddleware.js
+const SENSITIVE = ['password', 'token', 'email'];
 
-const obfuscateValue = (key, value) => {
-  const lowerKey = key.toLowerCase();
-  return SENSITIVE_KEYS.some(sensitive => lowerKey.includes(sensitive)) ? '***' : value;
-};
+const obfuscate = (key, value) => 
+  SENSITIVE.some(s => key.toLowerCase().includes(s)) ? '***' : value;
 
-const collectParams = (params) => {
-  if (!params) return {};
-  return Object.entries(params).reduce((acc, [key, value]) => {
-    acc[key] = obfuscateValue(key, value);
+const cleanObj = (obj) => {
+  if (!obj || typeof obj !== 'object') return obj;
+  return Object.entries(obj).reduce((acc, [k, v]) => {
+    acc[k] = (typeof v === 'object') ? cleanObj(v) : obfuscate(k, v);
     return acc;
   }, {});
 };
 
-const statsMiddleware = (eventEmitter) => (req, res, next) => {
+module.exports = (eventEmitter) => (req, res, next) => {
   res.on('finish', () => {
     const stats = {
       timestamp: new Date().toISOString(),
-      method: req.method,
-      path: req.path,
-      pathParams: collectParams(req.params),
-      queryParams: collectParams(req.query),
-      bodyKeys: req.body ? Object.keys(req.body).map(k => ({ [k]: obfuscateValue(k, req.body[k]) })) : [],
+      method: req.method, path: req.path,
+      pathVariables: cleanObj(req.params),
+      queryString: cleanObj(req.query),
       userAgent: req.get('User-Agent') || 'Unknown',
-      ip: req.ip || req.connection.remoteAddress
+      ip: req.ip || req.connection.remoteAddress,
+      statusCode: res.statusCode
     };
-    
-    // Emit event instead of direct logging (Part E)
-    eventEmitter.emit('statsCollected', stats);
+    eventEmitter?.emit('statsCollected', stats);
   });
   next();
 };
-
-module.exports = statsMiddleware;
