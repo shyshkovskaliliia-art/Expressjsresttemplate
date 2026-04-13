@@ -1,0 +1,11 @@
+[
+  {
+    "type": "timing",
+    "timestamp": "2026-04-13T12:38:41.349Z",
+    "ip": "::ffff:127.0.0.1",
+    "method": "DELETE",
+    "path": "/1",
+    "responseTime": 0.8915,
+    "statusCode": 200
+  }
+]

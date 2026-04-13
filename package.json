@@ -4,9 +4,5 @@
     "dev": "nodemon server.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coverageDirectory": "./coverage"
   }
 }
