@@ -1,4 +1,4 @@
-const app = require('./app');
+﻿const app = require('./app');
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
@@ -7,6 +7,6 @@ app.listen(PORT, () => {
 
 // Graceful shutdown
 process.on('SIGINT', () => {
-  console.log('\n Server shutting down...');
+  console.log('\n🛑 Server shutting down...');
   process.exit(0);
 });
