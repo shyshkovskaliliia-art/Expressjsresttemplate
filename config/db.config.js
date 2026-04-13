@@ -1,11 +1,21 @@
-const config = {
-    db: {
-        host: 'localhost',
-        user: 'app_user', 
-        password: 'app_pwd',
-        database: 'employees',
-        connectTimeout: 60000,
-    },
-    listPerPage: 10,
-};
-module.exports = config;
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+pool.getConnection()
+  .then(conn => {
+    console.log('MySQL connected');
+    conn.release();
+  })
+  .catch(err => console.error('MySQL connection error:', err));
+
+module.exports = pool;
